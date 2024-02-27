@@ -102,7 +102,7 @@ export class CompetitionDetailsComponent implements OnInit {
       (data) => {
         console.log(data);
         this.notificationService.show(
-          ['Competition added successfully'],
+          ['Hunting added successfully'],
           'success'
         );
       },

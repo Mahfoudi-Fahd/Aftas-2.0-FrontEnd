@@ -4,7 +4,7 @@ import { CompetitionService } from '../../services/competition/competition.servi
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Competition , CCompetition } from '../../models/competition';
 import { Router, RouterLink } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { UserNavbarComponent } from '../user-navbar/user-navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { NotificationsService } from '../../services/notification/notifications.service';
@@ -14,7 +14,7 @@ import { Flowbite } from '../../config/flowbite';
 @Component({
   selector: 'app-competition',
   standalone: true,
-  imports: [CommonModule,RouterLink,NavbarComponent,FormsModule,NotificationsComponent],
+  imports: [CommonModule,RouterLink,UserNavbarComponent,FormsModule,NotificationsComponent],
   templateUrl: './competition.component.html',
   styleUrl: './competition.component.scss'
 })

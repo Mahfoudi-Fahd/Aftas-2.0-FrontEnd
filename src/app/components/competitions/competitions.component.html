@@ -1,0 +1,41 @@
+<div class="md:flex flex-wrap justify-center mx-1 mt-24">
+	<div class="flex flex-col justify-center mx-5 " *ngFor="let competition of competitions">
+		<div class="relative flex flex-col  space-y-3  rounded-xl shadow-lg p-3 max-w-xs  mx-auto my-5 border border-white bg-white">
+			<div class="w-full  bg-white grid place-items-center">
+				<img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" class="rounded-xl card-img" />
+			</div>
+			<div class="w-full  bg-white flex flex-col space-y-2 p-3">
+				<div class="flex justify-between item-center">
+					<p class="text-gray-500 font-medium hidden md:block">Hunting</p>
+					<div class="flex items-center">
+						<img src="assets/SVG/date.svg" class="w-4 me-1">
+						<p class="text-gray-600 font-bold text-sm ml-1">
+							{{competition.date}}
+						</p>
+					</div>
+					<!-- <p class="bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-gray-800 hidden md:block" *ngIf="isFutureDate(competition.date)">
+						Upcoming 
+					</p>
+					<p class="bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-gray-800 hidden md:block" *ngIf="!isFutureDate(competition.date)">
+						Past
+					</p> -->
+					<p [ngClass]="{
+						'px-3 py-1 rounded-full text-xs font-medium text-gray-800 hidden md:block': true,
+						'bg-green-200': isFutureDate(competition.date),
+						'bg-red-200': !isFutureDate(competition.date)
+					  }">
+						{{ isFutureDate(competition.date) ? 'Upcoming' : 'Past' }}
+					  </p>
+				</div>
+				<h4 class="font-black text-gray-800 md:text-xl text-xl">{{competition.competitionName}}</h4>
+				
+				<p class="flex text-gray-500 text-xs"><img src="assets/SVG/location.svg" class="w-4 me-3" alt="">{{competition.location}}</p>
+			
+				<p class=" font-black text-gray-800 text-sm">
+					{{competition.amount}}$
+					<span class="font-normal text-gray-600 text-base">/ Person</span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
