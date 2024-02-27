@@ -5,12 +5,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Competition } from '../../models/competition';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,RouterLink,NavbarComponent,],
+  imports: [CommonModule,RouterLink,NavbarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
