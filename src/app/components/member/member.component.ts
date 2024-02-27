@@ -56,14 +56,30 @@ export class MemberComponent implements OnInit{
     this.memberService.addMember(this.toSave).subscribe(
       (data) => {
         console.log(data);
-        this.notificationService.show(["Competition added successfully"], "success")
+        this.notificationService.show(["Member added successfully"], "success")
       },   
-  (HttpErrorResponse) => {
-    console.log( HttpErrorResponse.error)
-    this.notificationService.show(HttpErrorResponse.error.errors, "error")
-
-    })
-  }
-
-  
+      (error) => {
+        if (error.status === 401 || error.status === 403) {
+          // Token expired or unauthorized
+          console.error('Token expired or unauthorized:', error);
+          this.notificationService.show(["Token expired or unauthorized"], "error")
+        }
+        else  if (error.status === 400) {
+          // Token expired or unauthorized
+          console.error('Bad request:', error);
+          this.notificationService.show(["Bad request"], "error")
+        }
+        else  if (error.status === 500) {
+          // Token expired or unauthorized
+          console.error('Server error:', error);
+          this.notificationService.show(["You dont have the right permission"], "error")
+        }
+        else  if (error.status === 404) {
+          // Token expired or unauthorized
+          console.error('Not found:', error);
+          this.notificationService.show(["Not found"], "error")
+        }
+      }
+    );
+    }
 }

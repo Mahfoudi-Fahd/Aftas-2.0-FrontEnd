@@ -1,42 +1,263 @@
-<header class="hero relative ml-45">
-    <nav class ="items-center" >
-        <button routerLink=""></button>
-        <ul class="">
-            <div>
-                <form action="#" method="GET" class="hidden lg:block lg:pl-2">
-                    <label for="topbar-search" class="sr-only">Search</label>
-                    <div class="relative mt-1 lg:w-96">
-                      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/> </svg>
-                      </div>
-                      <input type="text" name="email" id="topbar-search" class="bg-gray-50 border border-gray-300 text-gray-900 focus:border-none sm:text-sm rounded-lg  block w-full pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search">
-                    </div>
-                </form>
-            </div>
-            <!-- <li><button routerLink="/competitions" id="devices-dropdown-button">Competitions</button></li>
-            <li><button routerLink="/dashboard">Dashboard</button></li>
-            <li><button href="#">About Us</button></li>
-            <li><button href="#">Contact Us</button></li> -->
-            
+<header class="hero relative">
+    <nav class="">
+        <button routerLink=""><img class="logo" (mouseover)=" closeAllDropdowns()" src="assets/SVG/logo-black.svg"
+                alt="Logo"></button>
+        <ul class="menus">
+            <li><button [routerLink]="['/competitions']">Competitions</button></li>
+            <li><button (mouseover)=" closeAllDropdowns()">About Us</button></li>
+            <li><button (mouseover)=" closeAllDropdowns()">Contact Us</button></li>
         </ul>
-        
         <ul class="smallbuttons">
-           
-            <li>
-                <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="bg-gray-50 border  border-gray-300 block focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
-                Add Competition <img src="assets/SVG/add-icon.svg" class=" ml-3 w-6" alt="add-icon">
+            <li class="" id="search">
+                <button (click)="toggleSearchDropdown()" id="dropdown-button">
+                    <img src="/assets/SVG/search-button.svg" alt="Search">
                 </button>
             </li>
-            <!-- <li class="" id="language"><button href="#"><img src="/assets/SVG/account1.svg" alt="Profile"></button></li> -->
-            <li class="" id="hamburger"><button href="#" id="burger-dropdown-button"><img src="/assets/SVG/Hamburger.svg" alt="Hamburger"></button></li>
+            <li class="" id="user">
+                <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar"
+                    class="flex text-sm  rounded-full md:me-0 " type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </li>
+
+            <li class="" id="hamburger">
+                <button id="burger-dropdown-button" (click)="toggleBurgerDropdown()">
+                    <img src="/assets/SVG/Hamburger.svg" alt="Hamburger">
+                </button>
+            </li>
         </ul>
     </nav>
 </header>
- 
+
+<!-- User Avatar Dropdown if Logged in -->
+<div id="dropdownAvatar"
+    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+
+    <ul *ngIf="isAuth || isAuthenticated()" class="py-2 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownUserAvatarButton">
+        <li *ngIf="isAdmin || isAdminist()">
+            <a [routerLink]="['admin']"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+        </li>
+        <li>
+            <a href="#"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+        </li>
+        <li>
+            <a href="#"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+        </li>
+    </ul>
+    <ul *ngIf="!isAuth" class="py-2 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownUserAvatarButton">
+        <li>
+            <a [routerLink]="['/login']"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Login</a>
+        </li>
+        <li>
+            <a [routerLink]="['/register']"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Signup</a>
+        </li>
+    </ul>
+   
+    <div class="py-2" *ngIf="isAuth">
+        <a
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><button
+                (click)="logout()" type="button">logout</button></a>
+    </div>
+</div>
 
 
 
-  
-  <!-- Devices Dropdown -->
- 
-  
+<!-- Devices Dropdown -->
+<!-- <form id="dropdownContainer" (mouseleave)="closeDropdowns()">
+    <div class="flex justify-center z-9 relative ">
+        <div id="devices-dropdown" class="z-10 hidden border border-gray-300"
+            [ngClass]="{'hidden': !devicesDropdownVisible, 'border': devicesDropdownVisible, 'border-gray-300': devicesDropdownVisible}">
+
+            <div id="devices-dropdown-inside"
+                class="flex gap-8 iphone-list items-start justify-start overflow-x-auto  ">
+                <div class=""></div>
+                <div class=""></div>
+                <div id="iphone-15-series" class="flex flex-1 flex-col items-center">
+                    <div class="iphone-icon"><img id="iphone-img" class="w-full"
+                            src="./assets/SVG/iphone-placeholder.svg" alt="iphone-placeholder"></div>
+                    <div class="">
+                        <div class="w-full iphone-serie">iPhone 15 Series</div>
+                        <div *ngFor="let iphone of iphone15">
+                            <a class="w-full " [routerLink]="['/products', iphone.id]" (click)="closeDropdowns()">{{
+                                iphone.name }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="iphone-15-series" class="flex flex-1 flex-col items-center">
+                    <div class="iphone-icon"><img id="iphone-img" class="w-full"
+                            src="./assets/SVG/iphone-placeholder.svg" alt="iphone-placeholder"></div>
+                    <div>
+                        <div class="w-full iphone-serie">iPhone 14 Series</div>
+                        <div *ngFor="let iphone of iphone14">
+                            <a class="w-full " [routerLink]="['/products', iphone.id]" (click)="closeDropdowns()">{{
+                                iphone.name }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="iphone-15-series" class="flex flex-1 flex-col items-center">
+                    <div class="iphone-icon"><img id="iphone-img" class="w-full"
+                            src="./assets/SVG/iphone-placeholder.svg" alt="iphone-placeholder"></div>
+                    <div>
+                        <div class="w-full iphone-serie">iPhone 13 Series</div>
+                        <div *ngFor="let iphone of iphone13">
+                            <a class="w-full " [routerLink]="['/products', iphone.id]" (click)="closeDropdowns()">{{
+                                iphone.name }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="iphone-15-series" class="flex flex-1 flex-col items-center">
+                    <div class="iphone-icon"><img id="iphone-img" class="w-full"
+                            src="./assets/SVG/iphone-placeholder.svg" alt="iphone-placeholder"></div>
+                    <div>
+                        <div class="w-full iphone-serie">iPhone 12 Series</div>
+                        <div *ngFor="let iphone of iphone12">
+                            <a class="w-full " [routerLink]="['/products', iphone.id]" (click)="closeDropdowns()">{{
+                                iphone.name }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="iphone-15-series" class="flex flex-1 flex-col items-center">
+                    <div class="iphone-icon"><img id="iphone-img" class="w-full"
+                            src="./assets/SVG/iphone-placeholder.svg" alt="iphone-placeholder"></div>
+                    <div>
+                        <div class="w-full iphone-serie">iPhone 11 Series</div>
+                        <div *ngFor="let iphone of iphone11">
+                            <a class="w-full " [routerLink]="['/products', iphone.id]" (click)="closeDropdowns()">{{
+                                iphone.name }}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form> -->
+
+
+<!-- Search Dropdown -->
+<form (mouseleave)="closeSearchDropdown()">
+    <div class="flex justify-center z-9 relative ">
+        <div id="dropdown" class="z-10 hidden border border-gray-300 dark:bg-gray-700"
+            [ngClass]="{'hidden': !searchDropdownVisible, 'border': searchDropdownVisible, 'border-gray-300': searchDropdownVisible}">
+
+            <form>
+                <label for="case-search"
+                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white ">Search</label>
+                <div class="relative border-none flex items-center search-margin phone-margin">
+                    <div class="pointer-events-none">
+                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 33 33" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M4.12489 4.12489C6.76602 1.48377 10.3481 0 14.0833 0C17.8184 0 21.4005 1.48377 24.0416 4.12489C26.6828 6.76602 28.1665 10.3481 28.1665 14.0833C28.1665 17.1452 27.1694 20.1043 25.355 22.5265L32.4142 29.5858C33.1953 30.3668 33.1953 31.6332 32.4142 32.4142C31.6332 33.1953 30.3668 33.1953 29.5858 32.4142L22.5265 25.355C20.1043 27.1694 17.1452 28.1665 14.0833 28.1665C10.3481 28.1665 6.76602 26.6828 4.12489 24.0416C1.48377 21.4005 0 17.8184 0 14.0833C0 10.3481 1.48377 6.76602 4.12489 4.12489ZM14.0833 4C11.409 4 8.8443 5.06234 6.95332 6.95332C5.06234 8.8443 4 11.409 4 14.0833C4 16.7575 5.06234 19.3222 6.95332 21.2132C8.8443 23.1042 11.409 24.1665 14.0833 24.1665C16.7575 24.1665 19.3222 23.1042 21.2132 21.2132C23.1042 19.3222 24.1665 16.7575 24.1665 14.0833C24.1665 11.409 23.1042 8.8443 21.2132 6.95332C19.3222 5.06234 16.7575 4 14.0833 4Z"
+                                fill="black" fill-opacity="0.6" style="fill:black;fill:black;fill-opacity:0.6;" />
+                        </svg>
+                    </div>
+                    <input type="search" id="case-search" class="block w-full dropdown-text rounded-lg focus large"
+                        placeholder="Search for a case" required>
+                    <input type="search" id="case-search" class="block w-full dropdown-text rounded-lg focus small"
+                        placeholder="Search" required>
+                </div>
+            </form>
+
+
+
+            <ul class="text-sm text-gray-700 border-none dark:text-gray-200">
+
+                <li><a class="inline-flex w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Quick
+                        Links</a></li>
+
+                <li>
+                    <a href="#"
+                        class="flex items-center w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white font-medium">
+                        <div>
+                            <svg class="mr-2" width="6" height="10" viewBox="0 0 6 10" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.547526 9.58143C0.150825 9.22261 0.150825 8.59966 0.547526 8.24085L3.88969 5.21786C3.99942 5.1186 3.99942 4.94629 3.88969 4.84704L0.547525 1.82405C0.150825 1.46523 0.150824 0.842284 0.547525 0.483468C0.89175 0.172114 1.41586 0.172114 1.76008 0.483467L5.35446 3.73459C6.12258 4.42935 6.12258 5.63554 5.35446 6.3303L1.76008 9.58143C1.41586 9.89278 0.891751 9.89278 0.547526 9.58143Z"
+                                    fill="black" style="fill:black;fill:black;fill-opacity:1;" />
+                            </svg>
+                        </div>Iphone Xr Cases
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#"
+                        class="flex items-center w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white font-medium">
+                        <div>
+                            <svg class="mr-2" width="6" height="10" viewBox="0 0 6 10" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.547526 9.58143C0.150825 9.22261 0.150825 8.59966 0.547526 8.24085L3.88969 5.21786C3.99942 5.1186 3.99942 4.94629 3.88969 4.84704L0.547525 1.82405C0.150825 1.46523 0.150824 0.842284 0.547525 0.483468C0.89175 0.172114 1.41586 0.172114 1.76008 0.483467L5.35446 3.73459C6.12258 4.42935 6.12258 5.63554 5.35446 6.3303L1.76008 9.58143C1.41586 9.89278 0.891751 9.89278 0.547526 9.58143Z"
+                                    fill="black" style="fill:black;fill:black;fill-opacity:1;" />
+                            </svg>
+                        </div>Iphone 15 Pro Max Cases
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#"
+                        class="flex items-center w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white font-medium">
+                        <div>
+                            <svg class="mr-2" width="6" height="10" viewBox="0 0 6 10" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.547526 9.58143C0.150825 9.22261 0.150825 8.59966 0.547526 8.24085L3.88969 5.21786C3.99942 5.1186 3.99942 4.94629 3.88969 4.84704L0.547525 1.82405C0.150825 1.46523 0.150824 0.842284 0.547525 0.483468C0.89175 0.172114 1.41586 0.172114 1.76008 0.483467L5.35446 3.73459C6.12258 4.42935 6.12258 5.63554 5.35446 6.3303L1.76008 9.58143C1.41586 9.89278 0.891751 9.89278 0.547526 9.58143Z"
+                                    fill="black" style="fill:black;fill:black;fill-opacity:1;" />
+                            </svg>
+                        </div>Newest Cases
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</form>
+
+
+
+<!-- Burger Dropdown -->
+<form>
+    <div class="flex justify-center z-9 relative "
+        [ngClass]="{'hidden': !burgerDropdownVisible, 'border': burgerDropdownVisible, 'border-gray-300': burgerDropdownVisible}">
+        <div id="burger-dropdown" class="z-10 hidden border border-gray-300 ">
+            <ul>
+                <li><button class="burger-text" id="devices-dropdown-button">Devices</button></li>
+                <li><button class="burger-text">About Us</button></li>
+                <li><button class="burger-text">Contact Us</button></li>
+            </ul>
+        </div>
+    </div>
+</form>
+
+<!-- Cart -->
+<div id="cart-preview"
+    class="overflow-y-auto fixed top-0 z-40 p-4 w-full max-w-lg h-screen bg-white transition-transform dark:bg-gray-800 right-0 translate-x-full"
+    tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+    <div>
+        <h4 id="read-drawer-label" class="mb-1.5 leading-none text-xl font-semibold text-gray-900 dark:text-white">Apple
+            iMac 25"</h4>
+        <h5 class="mb-5 text-xl font-bold text-gray-900 dark:text-white">$2999</h5>
+    </div>
+    <button type="button" data-drawer-dismiss="cart-preview" aria-controls="cart-preview"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+
+
+</div>
