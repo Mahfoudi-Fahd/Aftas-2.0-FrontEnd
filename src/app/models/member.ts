@@ -4,6 +4,7 @@ export interface Member {
     id?: string;
     firstName?: string;
     lastName?: string;
+    email?: string;
     accessionDate?: Date;
     nationality?: string;
     identityNumber?: string;
@@ -15,6 +16,7 @@ export class CMember implements Member {
     id?: string;
     firstName?: string;
     lastName?: string;
+    email?: string;
     accessionDate?: Date;
     nationality?: string;
     identityNumber?: string;

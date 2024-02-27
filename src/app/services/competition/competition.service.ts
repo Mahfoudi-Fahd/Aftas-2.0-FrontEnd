@@ -59,4 +59,10 @@ export class CompetitionService {
     const url = `http://localhost:8081/api/v1/hunting/save`;
     return this.http.post<Member>(url, hunting, httpOptions);
   }
+
+  getMyCompetitions(id:number): Observable<Competition[]> {
+    return this.http.get<Competition[]>(`${this.apiUrl}/member/${id}`).pipe(
+      map((res: any) => res.data)
+    );
+  }
 }
