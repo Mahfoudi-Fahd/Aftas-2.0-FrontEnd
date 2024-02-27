@@ -1,5 +1,5 @@
-<div  *ngIf="messages && messages.length > 0" class="notification" [ngClass]="{'success': type === 'success', 'warning': type === 'warning', 'error': type === 'error'}">
-  <span class="close-btn" (click)="closeNotification()">X</span>
+<div (click)="closeNotification()" *ngIf="messages && messages.length > 0" class="notification" [ngClass]="{'success': type === 'success', 'warning': type === 'warning', 'error': type === 'error'}">
+  <!-- <span class="close-btn" (click)="closeNotification()">X</span> -->
   <ul>
     <li *ngFor="let message of messages" class="flex items-center w-80">
       <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
